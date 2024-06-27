@@ -29,14 +29,14 @@ bot.on('message', async (msg) => {
 });
 
 app.post('/web-data', async (req, res) => {
-    const {queryId, steamID, depost} = req.body;
+    const {queryId, products = []} = req.body;
     try {
         await bot.answerWebAppQuery(queryId, {
             type: 'article',
             id: queryId,
             title: 'Успешная покупка',
             input_message_content: {
-                message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму ${deposit}, ${steamID}`
+                message_text: ` Поздравляю с покупкой, вы приобрели товар на сумму  ${products.map(item => item.title).join(', ')}`
             }
         })
         return res.status(200).json({});
